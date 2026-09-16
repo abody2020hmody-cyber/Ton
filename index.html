@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>التبرع عبر TON</title>
+  <!-- استدعاء مكتبة TON Connect الرسمية -->
+  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 20px; background: #f4f6f8; }
+    .card { background: white; padding: 20px; border-radius: 12px; max-width: 400px; margin: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    input { width: 80%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; text-align: center; }
+    button { background: #0088cc; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; width: 85%; }
+    #ton-connect { display: flex; justify-content: center; margin-bottom: 15px; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h2>💎 التبرع للمشروع</h2>
+  <p>اربط محفظتك وأدخل المبلغ للتبرع مباشرة</p>
+  
+  <!-- زر ربط المحفظة -->
+  <div id="ton-connect"></div>
+
+  <!-- مكان كتابة المبلغ -->
+  <input type="number" id="amount" placeholder="أدخل المبلغ بـ TON" step="0.1" min="0.1">
+  <br>
+  <button onclick="pay()">ارسل التبرع الآن</button>
+</div>
+
+<script>
+  // تهيئة زر TON Connect
+  const tonConnectUI = new TONConnectUI.TonConnectUI({
+      manifestUrl: 'https://raw.githubusercontent.com/ton-community/tutorials/main/03-client/test/public/tonconnect-manifest.json',
+      buttonRootId: 'ton-connect'
+  });
+
+  async function pay() {
+      const amountInput = document.getElementById('amount').value;
+      if (!amountInput || amountInput <= 0) {
+          alert('يرجى إدخال مبلغ صحيح');
+          return;
+      }
+
+      // تحويل المبلغ إلى وحدة NanoTON
+      const nanoAmount = (parseFloat(amountInput) * 1000000000).toString();
+
+      const transaction = {
+          validUntil: Math.floor(Date.now() / 1000) + 600,
+          messages: [
+              {
+                  address: "ضع_عنوان_محفظتك_هنا", // <--- استبدل هذا الخيار بعنوان محفظتك الـ TON
+                  amount: nanoAmount
+              }
+          ]
+      };
+
+      try {
+          await tonConnectUI.sendTransaction(transaction);
+          alert('تم التبرع بنجاح! شكراً لدعمك.');
+      } catch (e) {
+          alert('تم إلغاء العملية أو حدث خطأ.');
+      }
+  }
+</script>
+
+</body>
+</html>
+
