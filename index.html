@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>التبرع عبر TON</title>
-  <!-- استدعاء مكتبة TON Connect الرسمية -->
+  <!-- استدعاء أحدث إصدار من مكتبة TON Connect -->
   <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
   <style>
     body { font-family: sans-serif; text-align: center; padding: 20px; background: #f4f6f8; }
@@ -30,10 +30,9 @@
 </div>
 
 <script>
-  // تهيئة زر TON Connect
+  // تهيئة TON Connect بالرابط الموثوق
   const tonConnectUI = new TONConnectUI.TonConnectUI({
-      manifestUrl: 'manifestUrl: 'https://ton-connect.github.io/demo-dapp-with-react-ui/tonconnect-manifest.json',
-',
+      manifestUrl: 'https://ton-connect.github.io/demo-dapp-with-react-ui/tonconnect-manifest.json',
       buttonRootId: 'ton-connect'
   });
 
@@ -51,7 +50,7 @@
           validUntil: Math.floor(Date.now() / 1000) + 600,
           messages: [
               {
-                  address: "manifestUrl: 'UQAKVwK4bWik5IvmuvTn5-YJU-SZ9LZvsHoqqPAhrYGvogx7',", // <--- استبدل هذا الخيار بعنوان محفظتك الـ TON
+                  address: "UQAKVwK4bWik5IvmuvTn5-YJU-SZ9LZvsHoqqPAhrYGvogx7", 
                   amount: nanoAmount
               }
           ]
@@ -68,4 +67,3 @@
 
 </body>
 </html>
-
